@@ -3,14 +3,6 @@ import numpy as np
 
 
 def orange_detect(img):
-    """
-    オレンジ色のものにマスクを掛ける。
-    引数imgには動画の各フレームを入力
-    """
-    #MOG2による背景 ノイズ除去のため
-    fgbg = cv2.createBackgroundSubtractorMOG2()
-    fgmask = fgbg.apply(img)
-    
     # HSV色空間に変換
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -18,8 +10,7 @@ def orange_detect(img):
     hsv_min = np.array([15 / 2, 150, 50])  # opencvのHueはHue/2を指定する
     hsv_max = np.array([50 / 2, 255, 255])
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
-    
-    mask = cv2.bitwise_and(mask, mask, mask=fgmask)
+
     return mask
 
 
