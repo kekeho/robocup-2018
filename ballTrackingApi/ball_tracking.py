@@ -1,11 +1,9 @@
-import numpy as np
 import cv2
 from orange_mask import orange_detect
 
 
 def track(frame):
-    mask = orange_detect(frame)
-    moment = cv2.moments(mask)
+    moment = cv2.moments(frame)
     if moment['m00'] != 0:
         x = int(moment['m10'] / moment['m00'])
         y = int(moment['m01'] / moment['m00'])
@@ -22,12 +20,13 @@ def main():
     while(cap.isOpened()):
         # フレームを取得
         ret, frame = cap.read()
-        point = track(frame)
-        print("\r{x}, {y}".format(x=point[0], y=point[1]), end='')
+
         # オレンジを検出 オレンジにマスク
         mask = orange_detect(frame)
-        # オレンジ以外をマスク。オレンジはそのままの色表示。
-        without_orange_mask = cv2.bitwise_and(frame, frame, mask=mask)
+        # オレンジのトラッキング
+        point = track(mask)
+        cv2.line(mask, (point[0]-20, point[1]), (point[0]+20, point[1]), (0,0,255), 5) #マーカー横線
+        cv2.line(mask, (point[0], point[1]-20), (point[0], point[1]+20), (0,0,255), 5) #マーカー縦線
         # 結果表示
         cv2.imshow("Frame", frame)
         cv2.imshow("Orange", mask)
