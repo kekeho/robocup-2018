@@ -1,4 +1,4 @@
-#!/Users/hiroki/Documents/部活/Korobo/robocup-jr-2018/robocup2018/bin/python
+#!/Users/hiroki/Documents/部活/Korobo/robocup-jr-2018/env_robocup2018/bin/python
 
 import sys
 import getopt

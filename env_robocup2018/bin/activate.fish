@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/hiroki/Documents/部活/Korobo/robocup-jr-2018/robocup2018"
+set -gx VIRTUAL_ENV "/Users/hiroki/Documents/部活/Korobo/robocup-jr-2018/env_robocup2018"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
