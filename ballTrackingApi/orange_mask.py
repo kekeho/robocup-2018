@@ -7,7 +7,7 @@ def orange_detect(img):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
     # 赤色のHSVの値域1
-    hsv_min = np.array([15 / 2, 150, 140])  # opencvのHueはHue/2を指定する
+    hsv_min = np.array([0 / 2, 150, 140])  # opencvのHueはHue/2を指定する
     hsv_max = np.array([50 / 2, 255, 255])
     mask = cv2.inRange(hsv, hsv_min, hsv_max)
 
