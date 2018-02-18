@@ -1,7 +1,5 @@
-import cv2, time
+import cv2, subprocess
 from orange_mask import orange_detect
-from picamera import PiCamera
-from picamera.array import PiRGBArray
 
 
 def track(frame):
@@ -32,14 +30,12 @@ def track(frame):
 
 
 def main():
-    camera = PiCamera()
-    camera.resolution = (1280, 720)
-    camera.framerate = 32
-    raw_cap = PiRGBArray(camera, size=(1280, 720))
-    time.sleep(0.1) #カメラの起動を待つ
+    cap = cv2.VideoCapture('http://localhost:8080/?action=stream')
 
-    for frame_array in camera.capture_continuous(raw_cap, format='bgr', use_video_port=True):
-        frame = frame_array.array
+    while(cap.isOpened()):
+        # フレームを取得
+        ret, frame = cap.read()
+
         # オレンジを検出 オレンジにマスク
         mask = orange_detect(frame)
         # オレンジのトラッキング
@@ -56,6 +52,7 @@ def main():
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
 
+    cap.release()
     cv2.destroyAllWindows()
 
 
