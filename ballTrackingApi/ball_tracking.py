@@ -37,10 +37,9 @@ def main():
     camera = picamera.PiCamera()
     camera.brightness = 50
     camera.video_stabilization = False
-    camera.close()
 
     while(1):
-        with picamera.PiCamera() as camera:
+        with picamera.array.PiRGBArray(camera) as stream:
             camera.capture(stream, format='bgr')
         
         # フレームを取得
@@ -63,7 +62,7 @@ def main():
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
 
-    cap.release()
+    camera.close()
     cv2.destroyAllWindows()
 
 
