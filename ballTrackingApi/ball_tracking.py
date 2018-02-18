@@ -1,4 +1,7 @@
-import cv2, subprocess
+import cv2
+import picamera
+import io
+import numpy as np
 from orange_mask import orange_detect
 
 
@@ -30,11 +33,20 @@ def track(frame):
 
 
 def main():
-    cap = cv2.VideoCapture('http://localhost:8080/?action=stream')
+    stream = io.BytesIO()
+    camera = picamera.PiCamera()
+    camera.brightness = 50
+    camera.video_stabilization = False
+    camera.close()
 
-    while(cap.isOpened()):
+    while(1):
+        with picamera.PiCamera() as camera:
+            camera.capture(stream, format='bgr')
+
+        data = np.fromstring(stream.getvalue(), dtype=np.unit8)
         # フレームを取得
-        ret, frame = cap.read()
+        frame = cv2.imdecode(data, 1)
+        camera.close()
 
         # オレンジを検出 オレンジにマスク
         mask = orange_detect(frame)
