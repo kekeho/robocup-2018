@@ -1,4 +1,4 @@
-import cv2
+import cv2, time
 from orange_mask import orange_detect
 from picamera import PiCamera
 from picamera.array import PiRGBArray
@@ -36,6 +36,7 @@ def main():
     camera.resolution = (1280, 720)
     camera.framerate = 32
     raw_cap = PiRGBArray(camera, size=(1280, 720))
+    time.sleep(0.1) #カメラの起動を待つ
 
     for frame_array in camera.capture_continuous(raw_cap, format='bgr', use_video_port=True):
         frame = frame_array.array
