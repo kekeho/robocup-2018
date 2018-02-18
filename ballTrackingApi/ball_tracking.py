@@ -43,7 +43,7 @@ def main():
         with picamera.PiCamera() as camera:
             camera.capture(stream, format='bgr')
 
-        data = np.fromstring(stream.getvalue(), dtype=np.unit8)
+        data = np.fromstring(stream.getvalue(), dtype=np.uint8)
         # フレームを取得
         frame = cv2.imdecode(data, 1)
         camera.close()
