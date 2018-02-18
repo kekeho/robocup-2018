@@ -33,9 +33,9 @@ def track(frame):
 
 def main():
     camera = PiCamera()
-    camera.resolution = (1920, 1080)
+    camera.resolution = (1280, 720)
     camera.framerate = 32
-    raw_cap = PiRGBArray(camera, size=(1920, 1080))
+    raw_cap = PiRGBArray(camera, size=(1280, 720))
 
     for frame_array in camera.capture_continuous(raw_cap, format='bgr', use_video_port=True):
         frame = frame_array.array
