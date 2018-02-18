@@ -1,5 +1,6 @@
 import cv2
 import picamera
+import picamera.array
 import io
 import numpy as np
 from orange_mask import orange_detect
