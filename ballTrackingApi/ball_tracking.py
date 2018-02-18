@@ -42,10 +42,9 @@ def main():
     while(1):
         with picamera.PiCamera() as camera:
             camera.capture(stream, format='bgr')
-
-        data = np.fromstring(stream.getvalue(), dtype=np.uint8)
+        
         # フレームを取得
-        frame = cv2.imdecode(data, 1)
+        frame = stream.array
         camera.close()
 
         # オレンジを検出 オレンジにマスク
