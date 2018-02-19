@@ -1,8 +1,7 @@
 import cv2
 import picamera
 import picamera.array
-import io
-import numpy as np
+import math
 from orange_mask import orange_detect
 
 
@@ -19,11 +18,20 @@ def track(frame):
     return x, y
 
 
+# 今のところ角度だけだそう
+def calc_distance(bx, by):
+    # 自分の座標
+    mx = 100
+    my = 75
+    return math.atan2(by - my, bx - mx)
+
+
 def main():
     camera = picamera.PiCamera()
-    camera.resolution = (480, 320)
+    camera.resolution = (200, 150)
     camera.brightness = 40
     camera.saturation = 20
+    camera.hflip = True
     camera.video_stabilization = False
 
     while(1):
@@ -37,6 +45,12 @@ def main():
         mask = orange_detect(frame)
         # オレンジのトラッキング
         point = track(mask)
+        
+        #計算
+        rad = calc_distance(point[0], point[1])
+        with open('result.txt', mode='w') as f:
+            f.write(rad)
+        
         cv2.line(mask, (point[0] - 20, point[1]),
                  (point[0] + 20, point[1]), (0, 0, 255), 5)  # マーカー横線
         cv2.line(mask, (point[0], point[1] - 20),
