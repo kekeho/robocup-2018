@@ -45,8 +45,6 @@ def main():
         
         # フレームを取得
         frame = stream.array
-        cv2.imshow("Frame", frame)
-        camera.close()
 
         # オレンジを検出 オレンジにマスク
         mask = orange_detect(frame)
@@ -57,6 +55,7 @@ def main():
         cv2.line(mask, (point[0], point[1] - 20),
                  (point[0], point[1] + 20), (0, 0, 255), 5)  # マーカー縦線
         # 結果表示
+        cv2.imshow("Frame", frame)
         cv2.imshow("Orange", mask)
 
         # qキーが押されたら途中終了
