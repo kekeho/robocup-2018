@@ -37,7 +37,6 @@ def main():
     camera = picamera.PiCamera()
     camera.brightness = 50
     camera.video_stabilization = False
-    camera.start_preview()
 
     while(1):
         stream = picamera.array.PiRGBArray(camera)
@@ -55,7 +54,7 @@ def main():
         cv2.line(mask, (point[0], point[1] - 20),
                  (point[0], point[1] + 20), (0, 0, 255), 5)  # マーカー縦線
         # 結果表示
-        cv2.imshow("Frame", frame)
+        # cv2.imshow("Frame", frame)
         cv2.imshow("Orange", mask)
 
         # qキーが押されたら途中終了
