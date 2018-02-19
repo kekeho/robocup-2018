@@ -21,7 +21,7 @@ def track(frame):
 
 def main():
     camera = picamera.PiCamera()
-    camera.resolution(480, 320)
+    camera.resolution = (480, 320)
     camera.brightness = 40
     camera.saturation = 20
     camera.video_stabilization = False
