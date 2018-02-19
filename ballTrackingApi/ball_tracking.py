@@ -7,20 +7,6 @@ from orange_mask import orange_detect
 
 
 def track(frame):
-    # img, contours, hie = cv2.findContours(
-    #     frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    # max_area = -1
-    # max_area_id = 0
-    # 
-    # if len(contours) == 0:
-    #     return 0, 0
-    # 
-    # for i in range(0, len(contours)):
-    #     area = cv2.contourArea(contours[i])
-    #     if max_area < area:
-    #         max_area = area
-    #         max_area_id = i
-
     moment = cv2.moments(frame)
 
     if moment['m00'] != 0:
@@ -35,6 +21,7 @@ def track(frame):
 
 def main():
     camera = picamera.PiCamera()
+    camera.resolution(480, 320)
     camera.brightness = 40
     camera.saturation = 20
     camera.video_stabilization = False
@@ -42,7 +29,7 @@ def main():
     while(1):
         stream = picamera.array.PiRGBArray(camera)
         camera.capture(stream, format='bgr')
-        
+
         # フレームを取得
         frame = stream.array
 
