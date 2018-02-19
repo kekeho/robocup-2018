@@ -49,7 +49,7 @@ def main():
         #計算
         rad = calc_distance(point[0], point[1])
         with open('result.txt', mode='w') as f:
-            f.write(rad)
+            f.write(str(rad))
         
         cv2.line(mask, (point[0] - 20, point[1]),
                  (point[0] + 20, point[1]), (0, 0, 255), 5)  # マーカー横線
