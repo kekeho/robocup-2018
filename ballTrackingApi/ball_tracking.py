@@ -34,14 +34,14 @@ def track(frame):
 
 
 def main():
-    stream = io.BytesIO()
     camera = picamera.PiCamera()
     camera.brightness = 50
     camera.video_stabilization = False
+    camera.start_preview()
 
     while(1):
-        with picamera.array.PiRGBArray(camera) as stream:
-            camera.capture(stream, format='bgr')
+        stream = picamera.array.PiRGBArray(camera)
+        camera.capture(stream, format='bgr')
         
         # フレームを取得
         frame = stream.array
