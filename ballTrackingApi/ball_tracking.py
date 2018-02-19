@@ -7,21 +7,21 @@ from orange_mask import orange_detect
 
 
 def track(frame):
-    img, contours, hie = cv2.findContours(
-        frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    max_area = -1
-    max_area_id = 0
+    # img, contours, hie = cv2.findContours(
+    #     frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    # max_area = -1
+    # max_area_id = 0
+    # 
+    # if len(contours) == 0:
+    #     return 0, 0
+    # 
+    # for i in range(0, len(contours)):
+    #     area = cv2.contourArea(contours[i])
+    #     if max_area < area:
+    #         max_area = area
+    #         max_area_id = i
 
-    if len(contours) == 0:
-        return 0, 0
-
-    for i in range(0, len(contours)):
-        area = cv2.contourArea(contours[i])
-        if max_area < area:
-            max_area = area
-            max_area_id = i
-
-    moment = cv2.moments(contours[max_area_id])
+    moment = cv2.moments(frame)
 
     if moment['m00'] != 0:
         x = int(moment['m10'] / moment['m00'])
