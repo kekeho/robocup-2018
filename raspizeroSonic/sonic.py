@@ -12,8 +12,8 @@ LOW = 0
 
 
 def setup(trig, echo):
-    gpio.setmode(trig, gpio.OUT)
-    gpio.setmode(echo, gpio.IN)
+    gpio.setup(trig, gpio.OUT)
+    gpio.setup(echo, gpio.IN)
 
 
 def pulseIn(pin):
@@ -42,6 +42,7 @@ def sonic_dist(trig, echo):
 
 
 def main():
+    gpio.setmode(gpio.BOARD)
     setup(fst_trig, fst_echo)
     setup(snd_trig, snd_echo)
     setup(thd_trig, thd_echo)
