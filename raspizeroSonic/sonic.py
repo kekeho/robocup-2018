@@ -54,9 +54,4 @@ def main():
 
 if __name__ == '__main__':
     while True:
-        try:
-            main()
-        except Exception as e:
-            print(e)
-            print('FIN')
-            exit()
+        main()
