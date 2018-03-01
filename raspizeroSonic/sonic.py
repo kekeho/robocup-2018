@@ -46,9 +46,10 @@ def main():
     setup(snd_trig, snd_echo)
     setup(thd_trig, thd_echo)
 
-    sonic_dist(fst_trig, fst_echo)
-    sonic_dist(snd_trig, snd_echo)
-    sonic_dist(thd_trig, thd_echo)
+    fst_dist = sonic_dist(fst_trig, fst_echo)
+    snd_dist = sonic_dist(snd_trig, snd_echo)
+    thd_dist = sonic_dist(thd_trig, thd_echo)
+    print(fst_dist, snd_dist, thd_dist)
 
 
 if __name__ == '__main__':
