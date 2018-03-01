@@ -1,9 +1,10 @@
-int fst_trig = 3;
+int fst_trig = 3; //right
 int fst_echo = 2;
-int snd_trig = 5;
+int snd_trig = 5; //left
 int snd_echo = 6;
-int thd_trig = 11;
+int thd_trig = 11; //back
 int thd_echo = 12;
+int cnt = 0;
 
 float fst_dist; float snd_dist; float thd_dist;
 
@@ -18,15 +19,21 @@ void setup() {
 }
 
 void loop() {
+  if(cnt == 0){
+    thd_dist = sonic_distance(thd_trig, thd_echo);
+  } 
   fst_dist = sonic_distance(fst_trig, fst_echo);
   snd_dist = sonic_distance(snd_trig, snd_echo);
-  thd_dist = sonic_distance(thd_trig, thd_echo);
   Serial.print("1. ");
   Serial.println(fst_dist);
   Serial.print("2. ");
   Serial.println(snd_dist);
   Serial.print("3. ");
   Serial.println(thd_dist);
+  cnt++;
+  if(cnt > 2){
+    cnt = 0;
+  }
 }
 
 float sonic_distance(int trig, int echo){
