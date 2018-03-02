@@ -1,42 +1,50 @@
-int fst_trig = 3; //right
-int fst_echo = 2;
-int snd_trig = 5; //left
-int snd_echo = 6;
-int thd_trig = 11; //back
-int thd_echo = 12;
+int back_trig = 3; //back
+int back_echo = 2;
+int right_trig = 8; //right
+int right_echo = 7;
+int left_trig = 12; //left
+int left_echo = 11;
+
+int out_back = 14;
+int out_right = 15;
+int out_left = 16;
 int cnt = 0;
 
-float fst_dist; float snd_dist; float thd_dist;
+int b_MAX = 30; //30cm
+int MAX = 46; //46cm
+int SUM = 100; //左右の壁から壁までは182cm。超音波センサの間隔が14.5cm
+
+float back_dist; float right_dist; float left_dist;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(fst_trig, OUTPUT);
-  pinMode(fst_echo, INPUT);
-  pinMode(snd_trig, OUTPUT);
-  pinMode(snd_echo, INPUT);
-  pinMode(thd_trig, OUTPUT);
-  pinMode(thd_echo, INPUT);
+  pinMode(back_trig, OUTPUT);
+  pinMode(back_echo, INPUT);
+  pinMode(right_trig, OUTPUT);
+  pinMode(right_echo, INPUT);
+  pinMode(left_trig, OUTPUT);
+  pinMode(left_echo, INPUT);
+  pinMode(out_back, OUTPUT);
+  pinMode(out_right, OUTPUT);
+  pinMode(out_left, OUTPUT);
 }
 
 void loop() {
-  if(cnt == 0){
-    thd_dist = sonic_distance(thd_trig, thd_echo);
-  } 
-  fst_dist = sonic_distance(fst_trig, fst_echo);
-  snd_dist = sonic_distance(snd_trig, snd_echo);
-  Serial.print("1. ");
-  Serial.println(fst_dist);
-  Serial.print("2. ");
-  Serial.println(snd_dist);
-  Serial.print("3. ");
-  Serial.println(thd_dist);
-  cnt++;
-  if(cnt > 2){
-    cnt = 0;
-  }
+  back_dist = sonicDisrance(back_trig, back_echo);
+  left_dist = sonicDisrance(left_trig, left_echo);
+  right_dist = sonicDisrance(right_trig, right_echo);
+  checkLeftAndRight(left_dist, right_dist);
+  checkBack(back_dist);
+  
+  Serial.print("b ");
+  Serial.println(back_dist);
+  Serial.print("r ");
+  Serial.println(right_dist);
+  Serial.print("l ");
+  Serial.println(left_dist);
 }
 
-float sonic_distance(int trig, int echo){
+float sonicDisrance(int trig, int echo){
   digitalWrite(trig, LOW);
   delayMicroseconds(2);
   digitalWrite(trig, HIGH);
@@ -46,4 +54,36 @@ float sonic_distance(int trig, int echo){
   duration = duration/2;
   float distance = duration*340*100/1000000;
   return distance;
+}
+
+int checkLeftAndRight(int d_left,int d_right){\
+  //おそらく他ロボットが入ってきているとき(10cmの誤差考慮)
+  if(d_left + d_right < SUM-10){
+    digitalWrite(out_back, LOW);
+    digitalWrite(out_left, LOW);
+    digitalWrite(out_right, LOW);
+    return -1;
+  }
+  //壁に接近(あと5cm)
+  if(d_left < MAX+6){
+    digitalWrite(out_left, HIGH);
+    digitalWrite(out_right, LOW);
+  } else if(d_right < MAX+8){
+    digitalWrite(out_right, HIGH);
+    digitalWrite(out_left, LOW);
+  } else {
+    digitalWrite(out_left, LOW);
+    digitalWrite(out_right, LOW);
+  }
+  return 0;
+}
+
+int checkBack(int d_back){
+  //後ろの壁にあと5cm
+  if(d_back < b_MAX+5){
+    digitalWrite(out_back, HIGH);
+  } else {
+    digitalWrite(out_back, LOW);
+  }
+  return 0;
 }
