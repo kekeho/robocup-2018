@@ -11,8 +11,10 @@ int out_left = 16;
 int cnt = 0;
 
 int b_MAX = 30; //30cm
-int MAX = 46; //46cm
+int goal_MAX = 5.2; //3~4cm
+int MAX = 50; //46cm
 int SUM = 100; //左右の壁から壁までは182cm。超音波センサの間隔が14.5cm
+char checkback_mode;
 
 float back_dist; float right_dist; float left_dist;
 
@@ -79,8 +81,8 @@ int checkLeftAndRight(int d_left,int d_right){\
 }
 
 int checkBack(int d_back){
-  //後ろの壁にあと5cm
-  if(d_back < b_MAX+5){
+  //goal mode
+  if(d_back > 15 || d_back < 5){
     digitalWrite(out_back, HIGH);
   } else {
     digitalWrite(out_back, LOW);
