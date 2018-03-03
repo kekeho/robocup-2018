@@ -45,12 +45,12 @@ def main():
         mask = orange_detect(frame)
         # オレンジのトラッキング
         point = track(mask)
-        
-        #計算
+
+        # 計算
         rad = calc_distance(point[0], point[1])
         with open('result.txt', mode='w') as f:
             f.write(str(rad))
-        
+
         cv2.line(mask, (point[0] - 20, point[1]),
                  (point[0] + 20, point[1]), (0, 0, 255), 5)  # マーカー横線
         cv2.line(mask, (point[0], point[1] - 20),
