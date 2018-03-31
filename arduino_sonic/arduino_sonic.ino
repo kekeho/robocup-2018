@@ -19,7 +19,7 @@ char checkback_mode;
 float back_dist; float right_dist; float left_dist;
 
 void setup() {
-  Serial.begin(9600);
+//  Serial.begin(9600);
   pinMode(back_trig, OUTPUT);
   pinMode(back_echo, INPUT);
   pinMode(right_trig, OUTPUT);
@@ -40,10 +40,10 @@ void loop() {
   
 //  Serial.print("b ");
 //  Serial.println(back_dist);
-  Serial.print("r:");
-  Serial.print(right_dist);
-  Serial.print(" l:");
-  Serial.println(left_dist);
+//  Serial.print("r:");
+//  Serial.print(right_dist);
+//  Serial.print(" l:");
+//  Serial.println(left_dist);
 }
 
 float sonicDisrance(int trig, int echo){
