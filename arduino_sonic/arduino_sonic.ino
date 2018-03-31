@@ -12,14 +12,14 @@ int cnt = 0;
 
 int b_MAX = 30; //30cm
 int goal_MAX = 5.2; //3~4cm
-int MAX = 61; //61cm
-int SUM = 100; //左右の壁から壁までは182cm。超音波センサの間隔が14.5cm
+int MAX = 61; //ゴールの前のみ移動させる: 61cm
+int SUM = 182-14; //左右の壁から壁までは182cm。超音波センサの間隔が14cm
 char checkback_mode;
 
 float back_dist; float right_dist; float left_dist;
 
 void setup() {
-//  Serial.begin(9600);
+  Serial.begin(9600);
   pinMode(back_trig, OUTPUT);
   pinMode(back_echo, INPUT);
   pinMode(right_trig, OUTPUT);
@@ -40,10 +40,10 @@ void loop() {
   
 //  Serial.print("b ");
 //  Serial.println(back_dist);
-//  Serial.print("r ");
-//  Serial.println(right_dist);
-//  Serial.print("l ");
-//  Serial.println(left_dist);
+  Serial.print("r:");
+  Serial.print(right_dist);
+  Serial.print(" l:");
+  Serial.println(left_dist);
 }
 
 float sonicDisrance(int trig, int echo){
@@ -60,7 +60,7 @@ float sonicDisrance(int trig, int echo){
 
 int checkLeftAndRight(int d_left,int d_right){\
   //おそらく他ロボットが入ってきているとき(10cmの誤差考慮)
-  if(d_left + d_right < SUM-10){
+  if(d_left + d_right + 14 < SUM-20){ //14はセンサの間隔
     digitalWrite(out_back, LOW);
     digitalWrite(out_left, LOW);
     digitalWrite(out_right, LOW);
