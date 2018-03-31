@@ -12,7 +12,7 @@ int cnt = 0;
 
 int b_MAX = 30; //30cm
 int goal_MAX = 5.2; //3~4cm
-int MAX = 61; //ゴールの前のみ移動させる: 61cm
+int MAX = 47; //ゴールの前のみ移動させる: 61cm
 int SUM = 182-14; //左右の壁から壁までは182cm。超音波センサの間隔が14cm
 char checkback_mode;
 
@@ -70,7 +70,7 @@ int checkLeftAndRight(int d_left,int d_right){\
   if(d_left < MAX+6){
     digitalWrite(out_left, HIGH);
     digitalWrite(out_right, LOW);
-  } else if(d_right < MAX+8){
+  } else if (d_right < MAX+8){
     digitalWrite(out_right, HIGH);
     digitalWrite(out_left, LOW);
   } else {
