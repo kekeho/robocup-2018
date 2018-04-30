@@ -12,14 +12,14 @@ int cnt = 0;
 
 int b_MAX = 30; //30cm
 int goal_MAX = 5.2; //3~4cm
-int MAX = 47; //ゴールの前のみ移動させる: 61cm
+int MAX = 30; //ゴールの前のみ移動させる: 61cm
 int SUM = 182-14; //左右の壁から壁までは182cm。超音波センサの間隔が14cm
 char checkback_mode;
 
 float back_dist; float right_dist; float left_dist;
 
 void setup() {
-//  Serial.begin(9600);
+  Serial.begin(9600);
   pinMode(back_trig, OUTPUT);
   pinMode(back_echo, INPUT);
   pinMode(right_trig, OUTPUT);
@@ -38,12 +38,12 @@ void loop() {
   checkLeftAndRight(left_dist, right_dist);
   checkBack(back_dist);
   
-//  Serial.print("b ");
-//  Serial.println(back_dist);
-//  Serial.print("r:");
-//  Serial.print(right_dist);
-//  Serial.print(" l:");
-//  Serial.println(left_dist);
+  // Serial.print("b ");
+  // Serial.println(back_dist);
+  // Serial.print("r:");
+  // Serial.print(right_dist);
+  // Serial.print(" l:");
+  // Serial.println(left_dist);
 }
 
 float sonicDisrance(int trig, int echo){
@@ -70,12 +70,15 @@ int checkLeftAndRight(int d_left,int d_right){\
   if(d_left < MAX+6){
     digitalWrite(out_left, HIGH);
     digitalWrite(out_right, LOW);
+    Serial.println("L1");
   } else if (d_right < MAX+8){
     digitalWrite(out_right, HIGH);
     digitalWrite(out_left, LOW);
+    Serial.println("R1");
   } else {
     digitalWrite(out_left, LOW);
     digitalWrite(out_right, LOW);
+    Serial.println(0);
   }
   return 0;
 }
